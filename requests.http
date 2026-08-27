@@ -1,0 +1,13 @@
+
+POST http://localhost:3000/api/applications
+Content-Type: application/json
+
+{
+  "company": "Capital One",
+  "position": "Software Engineering Intern",
+  "status": "Applied",
+  "location": "McLean, VA",
+  "jobLink": "https://example.com/job",
+  "dateApplied": "2026-08-26",
+  "notes": "Applied through company website"
+}
