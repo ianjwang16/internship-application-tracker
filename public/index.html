@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Internship Application Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Internship Application Tracker</h1>
+
+        <h2>Add Application</h2>
+
+        <form id="applicationForm">
+
+            <input
+                type="text"
+                id="company"
+                placeholder="Company"
+                required
+            >
+
+            <input
+                type="text"
+                id="position"
+                placeholder="Position"
+                required
+            >
+
+            <select id="status">
+                <option value="Saved">Saved</option>
+                <option value="Applied">Applied</option>
+                <option value="OA">OA</option>
+                <option value="Interview">Interview</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+
+            <input
+                type="text"
+                id="location"
+                placeholder="Location"
+            >
+
+            <button type="submit">
+                Add Application
+            </button>
+
+        </form>
+
+
+        <h2>My Applications</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="applicationTable">
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

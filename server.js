@@ -6,6 +6,7 @@ const Application = require("./models/Application");
 
 const app = express();
 app.use(express.json());
+app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
@@ -116,9 +117,29 @@ app.delete("/api/applications/:id", async (req, res) => {
     }
 });
 
-// Home
-app.get("/", (req, res) => {
-    res.send("Internship Application Tracker is running!");
+// CREATE a new application
+app.post("/api/applications", async (req, res) => {
+    try {
+        const newApplication = new Application({
+            company: req.body.company,
+            position: req.body.position,
+            status: req.body.status,
+            location: req.body.location,
+            jobLink: req.body.jobLink,
+            dateApplied: req.body.dateApplied,
+            notes: req.body.notes
+        });
+
+        const savedApplication =
+            await newApplication.save();
+
+        res.status(201).json(savedApplication);
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
 });
 
 app.listen(PORT, () => {
