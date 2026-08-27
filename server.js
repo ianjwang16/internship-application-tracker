@@ -61,18 +61,11 @@ app.get("/api/applications/:id", async (req, res) => {
 // UPDATE
 app.put("/api/applications/:id", async (req, res) => {
     try {
+
         const updatedApplication =
             await Application.findByIdAndUpdate(
                 req.params.id,
-                {
-                    company: req.body.company,
-                    position: req.body.position,
-                    status: req.body.status,
-                    location: req.body.location,
-                    jobLink: req.body.jobLink,
-                    dateApplied: req.body.dateApplied,
-                    notes: req.body.notes
-                },
+                req.body,
                 {
                     new: true,
                     runValidators: true

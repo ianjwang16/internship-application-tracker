@@ -3,8 +3,16 @@ const table = document.getElementById("applicationTable");
 
 async function loadApplications() {
 
-    const response =
-        await fetch("/api/applications");
+    const filterStatus =
+    document.getElementById("filterStatus").value;
+
+let url = "/api/applications";
+
+if (filterStatus) {
+    url += `?status=${filterStatus}`;
+}
+
+const response = await fetch(url);
 
     const applications =
         await response.json();
@@ -90,3 +98,36 @@ async function deleteApplication(id) {
 
     loadApplications();
 }
+
+async function updateStatus(id, newStatus) {
+
+    const response = await fetch(
+        `/api/applications/${id}`,
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                status: newStatus
+            })
+        }
+    );
+
+    if (!response.ok) {
+        console.error("Failed to update status");
+        return;
+    }
+
+    loadApplications();
+}
+
+const filterStatus =
+    document.getElementById("filterStatus");
+
+filterStatus.addEventListener(
+    "change",
+    loadApplications
+);
