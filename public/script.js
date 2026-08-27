@@ -125,17 +125,36 @@ async function loadApplications() {
 
                 <td>${application.location || ""}</td>
 
-                <td>
-                    <button
-                        onclick="editApplication('${application._id}')">
-                        Edit
-                    </button>
+<td>
+    ${
+        application.dateApplied
+            ? new Date(application.dateApplied).toLocaleDateString()
+            : ""
+    }
+</td>
 
-                    <button
-                        onclick="deleteApplication('${application._id}')">
-                        Delete
-                    </button>
-                </td>
+<td>
+    ${
+        application.jobLink
+            ? `<a href="${application.jobLink}"
+                  target="_blank">
+                  View Job
+               </a>`
+            : ""
+    }
+</td>
+
+<td>
+    <button
+        onclick="editApplication('${application._id}')">
+        Edit
+    </button>
+
+    <button
+        onclick="deleteApplication('${application._id}')">
+        Delete
+    </button>
+</td>
             `;
 
             table.appendChild(row);
@@ -219,9 +238,22 @@ form.addEventListener("submit", async (event) => {
 
 async function deleteApplication(id) {
 
-    await fetch(`/api/applications/${id}`, {
-        method: "DELETE"
-    });
+    const confirmed =
+        confirm("Are you sure you want to delete this application?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    const response =
+        await fetch(`/api/applications/${id}`, {
+            method: "DELETE"
+        });
+
+    if (!response.ok) {
+        alert("Failed to delete application");
+        return;
+    }
 
     loadApplications();
     loadStats();
@@ -311,6 +343,41 @@ async function loadStats() {
             application =>
                 application.status === "Rejected"
         ).length;
+    
+        const total = applications.length;
+
+const interviewCount =
+    applications.filter(
+        application =>
+            application.status === "Interview"
+    ).length;
+
+const offerCount =
+    applications.filter(
+        application =>
+            application.status === "Offer"
+    ).length;
+
+    let interviewRate = 0;
+let offerRate = 0;
+
+if (total > 0) {
+    interviewRate =
+        Math.round(
+            (interviewCount / total) * 100
+        );
+
+    offerRate =
+        Math.round(
+            (offerCount / total) * 100
+        );
+}
+
+document.getElementById("interviewRate").textContent =
+    interviewRate + "%";
+
+document.getElementById("offerRate").textContent =
+    offerRate + "%";
 }
 
 async function editApplication(id) {
