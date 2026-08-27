@@ -69,7 +69,6 @@ app.get("/api/applications/:id", async (req, res) => {
 // UPDATE
 app.put("/api/applications/:id", async (req, res) => {
     try {
-
         const updatedApplication =
             await Application.findByIdAndUpdate(
                 req.params.id,

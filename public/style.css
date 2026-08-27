@@ -19,25 +19,71 @@ h1 {
 
 form {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 12px;
     margin-bottom: 30px;
 }
 
-input,
-select,
-button {
+.form-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.form-row input,
+.form-row select,
+.form-row button {
+    box-sizing: border-box;
+    height: 48px;
     padding: 10px;
     font-size: 14px;
 }
 
-input,
-select {
+/* First row: approximately equal widths */
+.form-row input,
+.form-row select {
     flex: 1;
 }
 
+/* Second row custom widths */
+.second-row #jobLink {
+    flex: 2;
+}
+
+.second-row #dateApplied {
+    flex: 1;
+}
+
+.second-row #notes {
+    flex: 2;
+}
+
+.second-row #submitButton {
+    flex: 0 0 170px;
+}
+
+#jobLink {
+    flex: 2;
+}
+
+#dateApplied {
+    flex: 1;
+}
+
+#notes {
+    flex: 2;
+}
+
+input,
+select {
+    flex: 1 1 200px;
+}
+
 button {
+    padding: 10px 16px;
     cursor: pointer;
 }
+
 
 table {
     width: 100%;
@@ -90,4 +136,8 @@ button:hover {
 
 tbody tr:hover {
     background-color: #f9f9f9;
+}
+
+#submitButton {
+    flex: 0 0 auto;
 }

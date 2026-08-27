@@ -49,43 +49,69 @@
     id="searchCompany"
     placeholder="Search by company"
 >
+<form id="applicationForm">
 
-        <form id="applicationForm">
+    <div class="form-row">
 
-            <input
-                type="text"
-                id="company"
-                placeholder="Company"
-                required
-            >
+        <input
+            type="text"
+            id="company"
+            placeholder="Company"
+            required
+        >
 
-            <input
-                type="text"
-                id="position"
-                placeholder="Position"
-                required
-            >
+        <input
+            type="text"
+            id="position"
+            placeholder="Position"
+            required
+        >
 
-            <select id="status">
-                <option value="Saved">Saved</option>
-                <option value="Applied">Applied</option>
-                <option value="OA">OA</option>
-                <option value="Interview">Interview</option>
-                <option value="Offer">Offer</option>
-                <option value="Rejected">Rejected</option>
-            </select>
+        <select id="status">
+            <option value="Saved">Saved</option>
+            <option value="Applied">Applied</option>
+            <option value="OA">OA</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+        </select>
 
-            <input
-                type="text"
-                id="location"
-                placeholder="Location"
-            >
+        <input
+            type="text"
+            id="location"
+            placeholder="Location"
+        >
 
-            <button type="submit">
-                Add Application
-            </button>
+    </div>
 
-        </form>
+
+    <div class="form-row second-row">
+
+        <input
+            type="text"
+            id="jobLink"
+            placeholder="Job Link"
+        >
+
+        <input
+            type="date"
+            id="dateApplied"
+        >
+
+        <input
+            type="text"
+            id="notes"
+            placeholder="Notes"
+        >
+
+        <button type="submit" id="submitButton">
+            Add Application
+        </button>
+
+    </div>
+
+</form>
+        
 
 
         <h2>My Applications</h2>

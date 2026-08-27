@@ -1,6 +1,8 @@
 
 const table = document.getElementById("applicationTable");
 
+let editingId = null;
+
 async function loadApplications() {
 
     try {
@@ -125,10 +127,12 @@ async function loadApplications() {
 
                 <td>
                     <button
-                        onclick="deleteApplication(
-                            '${application._id}'
-                        )"
-                    >
+                        onclick="editApplication('${application._id}')">
+                        Edit
+                    </button>
+
+                    <button
+                        onclick="deleteApplication('${application._id}')">
                         Delete
                     </button>
                 </td>
@@ -152,7 +156,6 @@ const form =
     document.getElementById("applicationForm");
 
 form.addEventListener("submit", async (event) => {
-
     event.preventDefault();
 
     const application = {
@@ -166,33 +169,52 @@ form.addEventListener("submit", async (event) => {
             document.getElementById("status").value,
 
         location:
-            document.getElementById("location").value
+            document.getElementById("location").value,
+
+        jobLink:
+            document.getElementById("jobLink").value,
+
+        dateApplied:
+            document.getElementById("dateApplied").value,
+
+        notes:
+            document.getElementById("notes").value
     };
 
-    const response = await fetch("/api/applications", {
-    method: "POST",
+    let url = "/api/applications";
+    let method = "POST";
 
-    headers: {
-        "Content-Type": "application/json"
-    },
+    if (editingId) {
+        url = `/api/applications/${editingId}`;
+        method = "PUT";
+    }
 
-    body: JSON.stringify(application)
-});
+    const response = await fetch(url, {
+        method: method,
 
-const result = await response.json();
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-console.log("POST status:", response.status);
-console.log("POST result:", result);
+        body: JSON.stringify(application)
+    });
 
-if (!response.ok) {
-    alert(result.message);
-    return;
-}
+    const result = await response.json();
 
-form.reset();
+    if (!response.ok) {
+        alert(result.message);
+        return;
+    }
 
-loadApplications();
-loadStats();
+    form.reset();
+
+    editingId = null;
+
+    document.getElementById("submitButton").textContent =
+        "Add Application";
+
+    loadApplications();
+    loadStats();
 });
 
 async function deleteApplication(id) {
@@ -289,6 +311,48 @@ async function loadStats() {
             application =>
                 application.status === "Rejected"
         ).length;
+}
+
+async function editApplication(id) {
+
+    const response =
+        await fetch(`/api/applications/${id}`);
+
+    if (!response.ok) {
+        console.error("Failed to load application");
+        return;
+    }
+
+    const application =
+        await response.json();
+
+    document.getElementById("company").value =
+        application.company || "";
+
+    document.getElementById("position").value =
+        application.position || "";
+
+    document.getElementById("status").value =
+        application.status || "Saved";
+
+    document.getElementById("location").value =
+        application.location || "";
+
+    document.getElementById("jobLink").value =
+        application.jobLink || "";
+
+    document.getElementById("notes").value =
+        application.notes || "";
+
+    if (application.dateApplied) {
+        document.getElementById("dateApplied").value =
+            application.dateApplied.substring(0, 10);
+    }
+
+    editingId = id;
+
+    document.getElementById("submitButton").textContent =
+        "Update Application";
 }
 
 loadApplications();
