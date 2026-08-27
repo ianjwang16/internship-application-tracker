@@ -27,7 +27,15 @@ app.get("/api/applications", async (req, res) => {
             filter.status = req.query.status;
         }
 
-        const applications = await Application.find(filter);
+        if (req.query.company) {
+            filter.company = {
+                $regex: req.query.company,
+                $options: "i"
+            };
+        }
+
+        const applications =
+            await Application.find(filter);
 
         res.json(applications);
 
