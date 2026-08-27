@@ -317,67 +317,68 @@ async function loadStats() {
     const applications =
         await response.json();
 
-    document.getElementById("totalCount").textContent =
-        applications.length;
+    const total = applications.length;
 
-    document.getElementById("appliedCount").textContent =
+    const appliedCount =
         applications.filter(
             application =>
                 application.status === "Applied"
         ).length;
 
-    document.getElementById("interviewCount").textContent =
+    const interviewCount =
         applications.filter(
             application =>
                 application.status === "Interview"
         ).length;
 
-    document.getElementById("offerCount").textContent =
+    const offerCount =
         applications.filter(
             application =>
                 application.status === "Offer"
         ).length;
 
-    document.getElementById("rejectedCount").textContent =
+    const rejectedCount =
         applications.filter(
             application =>
                 application.status === "Rejected"
         ).length;
-    
-        const total = applications.length;
 
-const interviewCount =
-    applications.filter(
-        application =>
-            application.status === "Interview"
-    ).length;
+    document.getElementById("totalCount").textContent =
+        total;
 
-const offerCount =
-    applications.filter(
-        application =>
-            application.status === "Offer"
-    ).length;
+    document.getElementById("appliedCount").textContent =
+        appliedCount;
+
+    document.getElementById("interviewCount").textContent =
+        interviewCount;
+
+    document.getElementById("offerCount").textContent =
+        offerCount;
+
+    document.getElementById("rejectedCount").textContent =
+        rejectedCount;
 
     let interviewRate = 0;
-let offerRate = 0;
+    let offerRate = 0;
 
-if (total > 0) {
-    interviewRate =
-        Math.round(
-            (interviewCount / total) * 100
-        );
+    if (total > 0) {
 
-    offerRate =
-        Math.round(
-            (offerCount / total) * 100
-        );
-}
+        interviewRate =
+            Math.round(
+                (interviewCount / total) * 100
+            );
 
-document.getElementById("interviewRate").textContent =
-    interviewRate + "%";
+        offerRate =
+            Math.round(
+                (offerCount / total) * 100
+            );
+    }
 
-document.getElementById("offerRate").textContent =
-    offerRate + "%";
+    document.getElementById("interviewRate").textContent =
+        interviewRate + "%";
+
+    document.getElementById("offerRate").textContent =
+        offerRate + "%";
 }
 
 async function editApplication(id) {
