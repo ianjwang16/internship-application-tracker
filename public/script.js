@@ -3,94 +3,149 @@ const table = document.getElementById("applicationTable");
 
 async function loadApplications() {
 
-    const filterStatus =
-        document.getElementById("filterStatus").value;
+    try {
 
-    const searchCompany =
-        document.getElementById("searchCompany").value;
+        const filterStatus =
+            document.getElementById("filterStatus").value;
 
-    let url = "/api/applications";
+        const searchCompany =
+            document.getElementById("searchCompany").value;
 
-    const params = [];
+        const sortBy =
+            document.getElementById("sortBy").value;
 
-    if (filterStatus) {
-        params.push(
-            `status=${encodeURIComponent(filterStatus)}`
-        );
+        let url = "/api/applications";
+
+        const params = [];
+
+        if (filterStatus) {
+            params.push(
+                `status=${encodeURIComponent(filterStatus)}`
+            );
+        }
+
+        if (searchCompany) {
+            params.push(
+                `company=${encodeURIComponent(searchCompany)}`
+            );
+        }
+
+        if (params.length > 0) {
+            url += "?" + params.join("&");
+        }
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Failed to load applications");
+        }
+
+        let applications =
+            await response.json();
+
+        if (sortBy === "company") {
+            applications.sort((a, b) =>
+                a.company.localeCompare(b.company)
+            );
+        }
+
+        if (sortBy === "status") {
+            applications.sort((a, b) =>
+                a.status.localeCompare(b.status)
+            );
+        }
+
+        if (sortBy === "newest") {
+            applications.sort((a, b) =>
+                new Date(b.createdAt) -
+                new Date(a.createdAt)
+            );
+        }
+
+        table.innerHTML = "";
+
+        const emptyMessage =
+            document.getElementById("emptyMessage");
+
+        if (applications.length === 0) {
+            emptyMessage.style.display = "block";
+        } else {
+            emptyMessage.style.display = "none";
+        }
+
+        applications.forEach(application => {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${application.company}</td>
+                <td>${application.position}</td>
+
+                <td>
+                    <select
+                        onchange="updateStatus(
+                            '${application._id}',
+                            this.value
+                        )"
+                    >
+                        <option value="Saved"
+                            ${application.status === "Saved" ? "selected" : ""}>
+                            Saved
+                        </option>
+
+                        <option value="Applied"
+                            ${application.status === "Applied" ? "selected" : ""}>
+                            Applied
+                        </option>
+
+                        <option value="OA"
+                            ${application.status === "OA" ? "selected" : ""}>
+                            OA
+                        </option>
+
+                        <option value="Interview"
+                            ${application.status === "Interview" ? "selected" : ""}>
+                            Interview
+                        </option>
+
+                        <option value="Offer"
+                            ${application.status === "Offer" ? "selected" : ""}>
+                            Offer
+                        </option>
+
+                        <option value="Rejected"
+                            ${application.status === "Rejected" ? "selected" : ""}>
+                            Rejected
+                        </option>
+                    </select>
+                </td>
+
+                <td>${application.location || ""}</td>
+
+                <td>
+                    <button
+                        onclick="deleteApplication(
+                            '${application._id}'
+                        )"
+                    >
+                        Delete
+                    </button>
+                </td>
+            `;
+
+            table.appendChild(row);
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "emptyMessage"
+        ).textContent =
+            "Unable to load applications.";
     }
-
-    if (searchCompany) {
-        params.push(
-            `company=${encodeURIComponent(searchCompany)}`
-        );
-    }
-
-    if (params.length > 0) {
-        url += "?" + params.join("&");
-    }
-
-    const response = await fetch(url);
-
-    const applications = await response.json();
-
-    table.innerHTML = "";
-
-    applications.forEach(application => {
-
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${application.company}</td>
-            <td>${application.position}</td>
-
-            <td>
-                <select
-                    onchange="updateStatus('${application._id}', this.value)"
-                >
-                    <option value="Saved"
-                        ${application.status === "Saved" ? "selected" : ""}>
-                        Saved
-                    </option>
-
-                    <option value="Applied"
-                        ${application.status === "Applied" ? "selected" : ""}>
-                        Applied
-                    </option>
-
-                    <option value="OA"
-                        ${application.status === "OA" ? "selected" : ""}>
-                        OA
-                    </option>
-
-                    <option value="Interview"
-                        ${application.status === "Interview" ? "selected" : ""}>
-                        Interview
-                    </option>
-
-                    <option value="Offer"
-                        ${application.status === "Offer" ? "selected" : ""}>
-                        Offer
-                    </option>
-
-                    <option value="Rejected"
-                        ${application.status === "Rejected" ? "selected" : ""}>
-                        Rejected
-                    </option>
-                </select>
-            </td>
-
-            <td>${application.location || ""}</td>
-
-            <td>
-                <button
-                    onclick="deleteApplication('${application._id}')">
-                    Delete
-                </button>
-            </td>
-        `;
-
-        table.appendChild(row);
-    });
 }
 
 const form =
@@ -189,6 +244,14 @@ const searchCompany =
 
 searchCompany.addEventListener(
     "input",
+    loadApplications
+);
+
+const sortBy =
+    document.getElementById("sortBy");
+
+sortBy.addEventListener(
+    "change",
     loadApplications
 );
 
