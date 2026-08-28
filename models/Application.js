@@ -1,28 +1,39 @@
 const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema({
-
     company: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
     position: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
     status: {
         type: String,
+        enum: [
+            "Saved",
+            "Applied",
+            "OA",
+            "Interview",
+            "Offer",
+            "Rejected"
+        ],
         default: "Saved"
     },
 
     location: {
-        type: String
+        type: String,
+        trim: true
     },
 
     jobLink: {
-        type: String
+        type: String,
+        trim: true
     },
 
     dateApplied: {
@@ -30,16 +41,15 @@ const applicationSchema = new mongoose.Schema({
     },
 
     notes: {
-        type: String
+        type: String,
+        trim: true
     }
 
 }, {
     timestamps: true
 });
 
-const Application = mongoose.model(
-    "Application",
-    applicationSchema
-);
+const Application =
+    mongoose.model("Application", applicationSchema);
 
 module.exports = Application;

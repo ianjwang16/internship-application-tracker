@@ -207,11 +207,11 @@ form.addEventListener("submit", async (event) => {
         url = `/api/applications/${editingId}`;
         method = "PUT";
     }
+    try{
+        const response = await fetch(url, {
+            method: method,
 
-    const response = await fetch(url, {
-        method: method,
-
-        headers: {
+         headers: {
             "Content-Type": "application/json"
         },
 
@@ -234,7 +234,15 @@ form.addEventListener("submit", async (event) => {
 
     loadApplications();
     loadStats();
-});
+
+} catch (error) {
+    console.error(error);
+
+    alert(
+        "Could not connect to the server. Please try again."
+    );
+}
+});   // closes form.addEventListener
 
 async function deleteApplication(id) {
 

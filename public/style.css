@@ -141,3 +141,33 @@ tbody tr:hover {
 #submitButton {
     flex: 0 0 auto;
 }
+
+@media (max-width: 800px) {
+
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .second-row #jobLink,
+    .second-row #dateApplied,
+    .second-row #notes,
+    .second-row #submitButton {
+        flex: none;
+        width: 100%;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
