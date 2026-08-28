@@ -3,6 +3,10 @@
 A full-stack web application for tracking internship applications,
 statuses, dates, job links, notes, and application progress.
 
+## Live Demo
+
+https://internship-application-tracker-sobm.onrender.com
+
 ## Features
 
 - Add, edit, and delete internship applications

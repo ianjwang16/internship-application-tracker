@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGODB_URI)
         console.log("MongoDB connection error:", error);
     });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // GET all applications or filter by status
 app.get("/api/applications", async (req, res) => {
