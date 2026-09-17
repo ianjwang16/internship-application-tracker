@@ -6,7 +6,6 @@ const Application = require("./models/Application");
 
 const app = express();
 app.use(express.json());
-app.use(express.static("public"));
 
 
 // GET all applications or filter by status
