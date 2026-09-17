@@ -1,2 +1,12 @@
+/
 node_modules/
+client/node_modules/
+
 .env
+
+venv/
+.venv/
+
+client/dist/
+
+.DS_Store

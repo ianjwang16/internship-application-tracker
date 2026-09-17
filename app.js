@@ -1,3 +1,4 @@
+const path = require("path");
 require("dotenv").config();
 
 const express = require("express");
@@ -130,6 +131,17 @@ app.post("/api/applications", async (req, res) => {
             message: error.message
         });
     }
+});
+
+// Serve React production build
+app.use(
+    express.static(path.join(__dirname, "client", "dist"))
+);
+
+app.get("/", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "client", "dist", "index.html")
+    );
 });
 
 module.exports = app;

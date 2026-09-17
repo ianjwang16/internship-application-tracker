@@ -1,0 +1,200 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #111827;
+}
+
+h2 {
+  margin-top: 30px;
+  color: #111827;
+}
+
+h3 {
+  color: #111827;
+}
+
+/* FORM */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+
+input,
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+
+  background-color: white;
+  color: #222;
+}
+
+/* BUTTONS */
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+form button {
+  background-color: #2563eb;
+  color: white;
+}
+
+form button:hover {
+  background-color: #1d4ed8;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.dashboard-card {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.dashboard-card p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* SEARCH + FILTER */
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.controls label {
+  width: auto;
+  margin-right: 5px;
+}
+
+.controls input {
+  width: 240px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #eeeeee;
+}
+
+tr:hover {
+  background: #f9f9f9;
+}
+
+/* DELETE BUTTON */
+td button {
+  background-color: #dc2626;
+  color: white;
+}
+
+td button:hover {
+  background-color: #b91c1c;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  table {
+    font-size: 13px;
+  }
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 300px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+td button {
+  margin-right: 8px;
+}
